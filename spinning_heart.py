@@ -11,6 +11,14 @@ new_height = 25
 height, width = new_height, int(new_height * (width / height))
 frames = [resize(frame, (height, width), INTER_AREA) for frame in frames]
 
+luminance = ' .,-~:;=!*#$@'
+luminance_len = len(luminance)
+
+thickness = 4
+wait_time = .333
+
+x_shift = 20
+
 max_gray, min_gray = -1, 256
 for frame in frames:
     for i in range(width):
@@ -19,20 +27,14 @@ for frame in frames:
             max_gray = max(max_gray, frame[i][j])
             min_gray = min(min_gray, frame[i][j])
 
-luminance = ' .,-~:;=!*#$@'
-luminance_len = len(luminance)
-
-thickness = 4
-wait_time = 0.1
-
 wave_pos = 0
 index = 0
 while True:
-    system('cls') 
+    system('cls')
     for i in range(width - 1):
-        print(20 * ' ', end = '')
+        print(x_shift * ' ', end = '')
         for j in range(height):
-            gray = frames[index // 2][i][j]
+            gray = frames[index][i][j]
             if gray == 0: print(thickness * luminance[0], end = '')
             else:
                 for k in range(1, luminance_len):
@@ -44,7 +46,8 @@ while True:
     if wave_pos > 0: wave = wave[: wave_pos - 1] + "_" + wave[wave_pos :]
     if wave_pos < 9: wave = wave[: wave_pos + 1] + "'" + wave[wave_pos + 2 :]
     wave1 = wave[: 9] + '_' if wave_pos == 0 else wave
+    wave = "'" + wave[1:] if wave_pos == 9 else wave
     print(44 * ' ' + wave[: : -1] + wave1[: : -1] + 'chái tym uwu' + wave1 + wave)
-    index = index + 1 if index < 2 * (frames_amount - 1) else 0
+    index = index + 1 if index < frames_amount - 1 else 0
     wave_pos = wave_pos + 1 if wave_pos < 9 else 0
     sleep(wait_time)
