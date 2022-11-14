@@ -15,7 +15,7 @@ luminance = ' .,-~:;=!*#$@'
 luminance_len = len(luminance)
 
 thickness = 4
-wait_time = .333
+wait_time = .1
 
 x_shift = 20
 
